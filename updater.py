@@ -21,7 +21,7 @@ for repo in repos:
                                             )
     logger.info(f"Clonning {source_repo} to {repo_dir}...")
     clone_cmd = sp.run(["git", "clone", "--mirror",
-                        destination_repo, repo_dir],
+                        source_repo, repo_dir],
                         capture_output=True,
                         text=True)
     if clone_cmd.returncode == 0:
