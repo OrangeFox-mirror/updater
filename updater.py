@@ -24,8 +24,8 @@ for repo in repos:
     if clone_cmd.returncode == 0:
         logger.info(f"Successfully cloned {source_repo} to {mirror_dir}")
     else:
-        logger.error(f"Error in cloning {source_repo} to {mirror_dir}, status code: {str(clone_cmd.returncode)}:
-                     - stdout:\n{clone_cmd.stdout}\n- stderr:\n{clone_cmd.stderr}")
+        logger.error(f"Error in cloning {source_repo} to {mirror_dir}, status code: {str(clone_cmd.returncode)}:\n" +
+                     f"- stdout:\n{clone_cmd.stdout}\n- stderr:\n{clone_cmd.stderr}")
         continue
 
     logging.info(f"Pushing {source_dir} to {destination_dir}...")
@@ -33,6 +33,6 @@ for repo in repos:
     if push_cmd.returncode == 0:
         logger.success(f"Successfully pushed {source_repo} to {mirror_dir}")
     else:
-        logger.error(f"Error in pushing {source_repo} to {mirror_dir}, status code: {str(push_cmd.returncode)}:
-                     - stdout:\n{push_cmd.stdout}\n- stderr:\n{push_cmd.stderr}")
+        logger.error(f"Error in pushing {source_repo} to {mirror_dir}, status code: {str(push_cmd.returncode)}:\n"+
+                     f"- stdout:\n{push_cmd.stdout}\n- stderr:\n{push_cmd.stderr}")
         continue
