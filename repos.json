@@ -1,7 +1,7 @@
 [
     {
         "source": "https://gitlab.com/OrangeFox/bootable/Recovery.git",
-        "destination": "https://github.com/OrangeFox-mirror/bootable-recovery"
+        "destination": "git@github.com:OrangeFox-mirror/bootable-recovery.git"
     },
     {
         "source": "https://gitlab.com/OrangeFox/vendor/recovery.git",
