@@ -32,8 +32,9 @@ for repo in repos:
         print("======================\n")
         continue
 
+    push_repo = destination_repo.replace("https://", f"https://{os.environ["ORG_GITHUB_TOKEN"]}:")
     logger.info(f"Pushing {source_repo} ({repo_dir}) to {destination_repo}...")
-    push_cmd = sp.run(["git", "--work-tree", repo_dir, "push", "--mirror", destination_repo], capture_output=True, text=True)
+    push_cmd = sp.run(["git", "--work-tree", repo_dir, "push", "--mirror", push_repo], capture_output=True, text=True)
     if push_cmd.returncode == 0:
         logger.success(f"Successfully pushed {source_repo} to {destination_repo}")
     else:
