@@ -32,8 +32,8 @@ for repo in repos:
         print("======================\n")
         continue
 
-    logger.info(f"Pushing {destination_repo} ({repo_dir}) to {destination_repo}...")
-    push_cmd = sp.run(["git", "--git-dir", repo_dir, "push", "--mirror", destination_repo], capture_output=True, text=True)
+    logger.info(f"Pushing {source_repo} ({repo_dir}) to {destination_repo}...")
+    push_cmd = sp.run(["git", "--work-tree", repo_dir, "push", "--mirror", destination_repo], capture_output=True, text=True)
     if push_cmd.returncode == 0:
         logger.success(f"Successfully pushed {source_repo} to {destination_repo}")
     else:
