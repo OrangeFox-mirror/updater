@@ -17,4 +17,6 @@ jobs:
               run: pip3 install -r requirements.txt
 
             - name: Run updater
+              env:
+                ORG_GITHUB_TOKEN: ${{ secrets.ORG_GITHUB_TOKEN }}
               run: python3 updater.py
