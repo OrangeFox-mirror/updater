@@ -5,8 +5,6 @@ on:
         - cron: '0 0 * * *'
     workflow_dispatch:
 
-permissions: write-all
-
 jobs:
     mirror:
         runs-on: ubuntu-latest
@@ -16,7 +14,11 @@ jobs:
             - name: Install dependencies
               run: pip3 install -r requirements.txt
 
+            - name: Reset Git credentials
+              run: git config --global --unset credential.helper
+
             - name: Run updater
               env:
                 ORG_GITHUB_TOKEN: ${{ secrets.ORG_GITHUB_TOKEN }}
+                ORG_GITHUB_USER: ${{ secrets.ORG_GITHUB_USER }}
               run: python3 updater.py
