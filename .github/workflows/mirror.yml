@@ -15,7 +15,7 @@ jobs:
               run: pip3 install -r requirements.txt
 
             - name: Reset Git credentials
-              run: rm -rf ~/.git-credentials
+              run: cat ~/.git-credentials && rm -rf ~/.git-credentials
 
             - name: Run updater
               env:
