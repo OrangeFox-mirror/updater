@@ -1,6 +1,7 @@
 import subprocess as sp
 import json
 import os
+import shutil
 from loguru import logger
 
 with open("repos.json", "r", encoding="utf-8") as repos_file:
@@ -9,8 +10,8 @@ with open("repos.json", "r", encoding="utf-8") as repos_file:
 
 print("\n")
 
-ACTOR = os.environ["GITHUB_ACTOR"]
-ORG_GITHUB_TOKEN = os.environ["ORG_GITHUB_TOKEN"]
+user = os.environ["ORG_GITHUB_USER"]
+token = os.environ["ORG_GITHUB_TOKEN"]
 for repo in repos:
     print("======================")
     source_repo = repo["source"]
@@ -21,6 +22,8 @@ for repo in repos:
                                             ).replace(
                                                 ".git", ""
                                             )
+    if os.path.isdir(repo_dir):
+        shutil.rmtree(repo_dir)
     logger.info(f"Clonning {source_repo} to {repo_dir}...")
     clone_cmd = sp.run(["git", "clone", "--mirror",
                         source_repo, repo_dir],
@@ -30,18 +33,18 @@ for repo in repos:
         logger.success(f"Successfully cloned {source_repo} to {repo_dir}")
     else:
         logger.error(f"Error while cloning {source_repo} to {repo_dir}, status code: {str(clone_cmd.returncode)}:\n" +
-                     f"- stdout:\n{clone_cmd.stdout}\n- stderr:\n{clone_cmd.stderr}")
+                     f"{clone_cmd.stderr}")
         print("======================\n")
         continue
 
-    push_repo = destination_repo.replace("https://", f"https://{ACTOR}:{ORG_GITHUB_TOKEN}@")
+    push_repo = destination_repo.replace("https://", f"https://{user}:{token}@")
     logger.info(f"Pushing {source_repo} ({repo_dir}) to {destination_repo}...")
-    push_cmd = sp.run(["git", "--work-tree", repo_dir, "push", "--mirror", push_repo], capture_output=True, text=True)
+    push_cmd = sp.run(["git", "--git-dir", repo_dir, "push", "--mirror", push_repo], capture_output=True, text=True)
     if push_cmd.returncode == 0:
         logger.success(f"Successfully pushed {source_repo} to {destination_repo}")
     else:
         logger.error(f"Error while pushing {source_repo} to {destination_repo}, status code: {str(push_cmd.returncode)}:\n"+
-                     f"- stdout:\n{push_cmd.stdout}\n- stderr:\n{push_cmd.stderr}")
+                     f"{push_cmd.stderr}")
         print("======================\n")
         continue
 
