@@ -20,5 +20,5 @@ jobs:
             - name: Run updater
               env:
                 ORG_GITHUB_TOKEN: ${{ secrets.ORG_GITHUB_TOKEN }}
-                ORG_GITHUB_USER: ${{ secrets.ORG_GITHUB_USER }}
+                ORG_GITHUB_USERNAME: ${{ secrets.ORG_GITHUB_USERNAME }}
               run: python3 updater.py
