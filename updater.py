@@ -10,7 +10,7 @@ with open("repos.json", "r", encoding="utf-8") as repos_file:
 
 print("\n")
 
-user = os.environ["ORG_GITHUB_USER"]
+username = os.environ["ORG_GITHUB_USERNAME"]
 token = os.environ["ORG_GITHUB_TOKEN"]
 for repo in repos:
     print("======================")
@@ -37,7 +37,7 @@ for repo in repos:
         print("======================\n")
         continue
 
-    push_repo = destination_repo.replace("https://", f"https://{user}:{token}@")
+    push_repo = destination_repo.replace("https://", f"https://{username}:{token}@")
     logger.info(f"Pushing {source_repo} ({repo_dir}) to {destination_repo}...")
     push_cmd = sp.run(["git", "--git-dir", repo_dir, "push", "--mirror", push_repo], capture_output=True, text=True)
     if push_cmd.returncode == 0:
