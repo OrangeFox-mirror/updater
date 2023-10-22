@@ -5,6 +5,6 @@
     },
     {
         "source": "https://gitlab.com/OrangeFox/vendor/recovery.git",
-        "destination": "OrangeFox-mirror/vendor-recovery"
+        "destination": "https://github.com/OrangeFox-mirror/vendor-recovery"
     }
 ]
